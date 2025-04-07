@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--MenuMapper接口的映射文件，这里就就相当是MenuMapper接口的实现类，select标签就相当于实现类的具体方法-->
+<mapper namespace="com.huanf.mapper.MenuMapper">
+    <!--查询普通用户的权限信息-->
+    <select id="selectPermsByOtherUserId" resultType="java.lang.String">
+        SELECT
+            DISTINCT m.perms
+        FROM
+            `sys_user_role` ur
+                LEFT JOIN `sys_role_menu` rm ON ur.`role_id` = rm.`role_id`
+                LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
+        WHERE
+            ur.`user_id` = #{userId} AND
+            m.`menu_type` IN ('C','F') AND
+            m.`status` = 0 AND
+            m.`del_flag` = 0
+    </select>
+
+    <!--查询超级管理员的路由信息(权限菜单)-->
+    <select id="selectAllRouterMenu" resultType="com.huanf.domain.Menu">
+        SELECT
+            DISTINCT m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status,
+            IFNULL(m.perms,'') AS perms, m.is_frame,  m.menu_type, m.icon, m.order_num, m.create_time
+        FROM
+            `sys_menu` m
+        WHERE
+            m.`menu_type` IN ('C','M') AND
+            m.`status` = 0 AND
+            m.`del_flag` = 0
+        ORDER BY
+            m.parent_id,m.order_num
+    </select>
+
+    <!--查询普通用户的路由信息(权限菜单)-->
+    <select id="selectOtherRouterMenuTreeByUserId" resultType="com.huanf.domain.Menu">
+        SELECT
+            DISTINCT m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status,
+                     IFNULL(m.perms,'') AS perms, m.is_frame,  m.menu_type, m.icon, m.order_num, m.create_time
+        FROM
+            `sys_user_role` ur
+                LEFT JOIN `sys_role_menu` rm ON ur.`role_id` = rm.`role_id`
+                LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
+                LEFT JOIN `sys_role` r ON ur.`role_id` = r.`id`
+        WHERE
+            ur.`user_id` = #{userId} AND
+            m.`menu_type` IN ('C','M') AND
+            m.`status` = 0 AND
+            m.`del_flag` = 0 AND
+            r.`del_flag` = 0 AND
+            r.`status` = 0
+        ORDER BY
+            m.parent_id, m.order_num
+    </select>
+
+    <!--修改角色-根据角色id查询对应角色菜单列表树-->
+    <select id="selectMenuListByRoleId" resultType="java.lang.Long">
+        select m.id
+        from sys_menu m
+                 left join sys_role_menu rm on m.id = rm.menu_id
+        where rm.role_id = #{roleId}
+
+
+        order by m.parent_id, m.order_num
+    </select>
+</mapper>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>huanf-blog</title>
+  <link rel="shortcut icon" href="./static/favicon.svg">
+  <meta name="description" content="三更博客-个人历经26天所写完整笔记,从敲下第一个代码到项目部署,轻松搭建你的博客网站">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta name="msapplication-tap-highlight" content="no">
+  <link rel="stylesheet" href="./static/css/all.min.css">
+  <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"> -->
+  <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> -->
+
+  <style>
+    .footer {
+      background-color: rgba(0, 0, 0, 0);
+      width: 100%;
+      text-align: center;
+      padding: 15px 0 0 0;
+      opacity: 0.8;
+      display: block;
+      font-family: Arial, "STHeiti", Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 11px;
+    }
+
+    /* 当页面高度小于923px时 */
+    @media screen and (max-height: 923px) {
+      .footer {
+        height: 20px;
+        position: relative;
+      }
+    }
+
+    /* 当页面高度大于等于923px时 */
+    @media screen and (min-height: 923px) {
+      .footer {
+        height: 1px;
+        position: static;
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .footer a {
+      color: #000;
+    }
+  </style>
+
+  <script>
+    window.onpopstate = function () {
+      location.reload();
+    };
+    window.onload = function () {
+      var footer = document.querySelector(".footer");
+      var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
+
+      if (pageHeight < 923) {
+        footer.style.position = "fixed";
+        footer.style.bottom = "0";
+      } else {
+        footer.style.position = "static";
+      }
+    };
+  </script>
+
+  <script type="text/javascript" charset="UTF-8" src="./static/js/shCore.js"></script>
+  <script src="./static/js/jquery-3.6.0.min.js"></script>
+
+  <script>
+    // var a = new Array("Component 组件", "Repository 仓库", "Autowired 自动装配", "Qualifier 限定符", "scope 范围",
+    //   "PropertySource 属性源", "ApplicationContext 应用上下文", "Reaponse 响应", "Request 请求", "template 模板",
+    //   "Internal 内部的", "Resource 资源", "Resolver 解析器", "aside 侧边栏", "skip 跳过", "include 包含",
+    //   "exclude 排除", "modify 修改", "Simple 简单的", "Mapping 映射", "default 默认的", "privilege 权限",
+    //   "initialize 初始化", "properly 正确地", "info 信息", "cast 转换", "transfer 转换", "convert 转换",
+    //   "convertor 转换器", "proxy 代理", "target 目标", "reflect 反射", "core 核心", "aspect 切面", "ref 引用",
+    //   "Platform 平台", "Transaction 事务", "Manager 管理器", "attributes 属性", "properties 属性", "tx 事务",
+    //   "commit 提交", "config 配置", "result 结果", "development 开发", "pool 池", "parameter 参数", "dynamic 动态", "condition 条件", "collection 集合", "array 数组", "close 关闭", "item 项目", "separator 分隔符",
+    //   "dialect 方言", "orders 订单", "column 字段", "framework 框架", "frame 框架", "detected 检测", "detect 检测",
+    //   "detection 检测", "validation 校验", "validator 校验器", "implementation 实现类", "annotation 注解",
+    //   "Processor 处理器", "scan 扫描", "entity 实体", "pojo 实体类", "extraction 抽取", "reflection 反射",
+    //   "container 容器", "injection 注入", "batch 批量", "prefix 前缀", "Logic 逻辑", "wrapper 封装", "enum 枚举",
+    //   "reference documentation 参考文档", "embed 内嵌", "state 状态", "denied 拒绝", "command 命令", "line 行",
+    //   "arguments 参数", "OS 操作系统", "variables 变量", "environment 环境", "bak 备份", "deploy 部署",
+    //   "Canonical 规范的", "names 命名", "separated 分隔符", "lowercase 小写字母", "contains 包括", "non 非",
+    //   "alpha-numeric 字母数字", "characters 字符", "must 必须", "such as 例如", "mock 虚拟", "perform 执行", "delay 延迟", "normal 正常", "abnormal 异常",
+    //   "ResultSet 结果集", "embedded 内置的", "cache 缓存", "encryption 加密", "remote 远程", "section 部分",
+    //   "metadata 元数据", "instances 实例", "downstream 下游", "Adapter 适配器", "generally 通常", "advisable 建议",
+    //   "introduce 介绍v, 产品n", "product 产品n", "prodoce 生产v", "tight coupling 紧耦合", "fee 费用", "analyzer 分词器", "standard 标准", "non-standard 非标准",
+    //   "constant 常量", "bulk 批量", "hits 命中", "field 字段", "latitude 纬度", "longitude 经度", "(经度，纬度)",
+    //   "slots 插槽", "cluster 集群", "decode 解码", "encode 编码", "confirm 确认", "durable 持久化", "transient 临时",
+    //   "authority 权限", "auth 权限", "common 通用的", "consistency 一致性", "distribuion 分布式", "invoke 调用",
+    //   "example 案例", "protocol 协议", "serialization 序列化", "deserialization 反序列化", "buffer 缓冲区", "register 注册",
+    //   "ephemeral 临时的", "exception 异常", "synchronized 同步锁", "delegate 委托", "record 记录", "timestamp 时间戳", "task 任务",
+    //   "rinit 初始化", "notify 通知", "Runable 可运行的", "Throwable 可抛出的", "distro 发行版", "member 成员", "design 设计",
+    //   "execute 执行", "engine 引擎", "process 处理", "heartbeat 心跳", "schedule 定时器", "period 周期", "pattern 模式",
+    //   "optional 可选的", "receive 接收", "event 事件 ", "prepare 准备", "chain 链", "flow 流量", "statistic 统计",
+    //   "filter 过滤", "translation 转换，翻译", "interceptor 拦截器 ", "provide 提供", "authentication 验证",
+    //   "memory 内存", "detail 细节", "anonymous 匿名 ", "avatar 头像", "remark 备注", "expire 过期", "suffix 后缀"
+    // );
+    // a.sort(function () { return Math.random() > 0.5 ? -1 : 1; });
+    // var a_idx = 0;
+    // jQuery(document).ready(function ($) {
+    //   $("body").click(function (e) {
+    //     var $i = $("<span></span>").text(a[Math.floor(Math.random() * a.length)]);
+    //     var x = e.pageX,
+    //       y = e.pageY;
+    //     $i.css({
+    //       "z-index": 99999,
+    //       "top": y - 20,
+    //       "left": x,
+    //       "position": "absolute",
+    //       "color": "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+    //     });
+    //     $("body").append($i);
+    //     $i.animate({
+    //       "top": y - 180,
+    //       "opacity": 0
+    //     },
+    //       2500,
+    //       function () {
+    //         $i.remove();
+    //       });
+    //   });
+    // });
+
+
+    // 浏览器标题切换
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        document.title = '闲逛~';
+        clearTimeout(titleTime);
+      } else {
+        document.title = 'huanf-blog';
+        titleTime = setTimeout(function () {
+          document.title = OriginTitile;
+        }, 1000);
+      }
+    });
+
+  </script>
+
+</head>
+
+<body>
+  <div id="app"></div>
+  <div class="footer">
+    <a style="color: #000;">备案号:&nbsp;</a>
+    <a href="https://beian.miit.gov.cn/" class="font" target="_blank">粤ICP备2023097524号</a>
+  </div>
+</body>
+
+</html>

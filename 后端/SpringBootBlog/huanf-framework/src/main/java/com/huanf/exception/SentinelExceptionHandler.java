@@ -1,0 +1,41 @@
+package com.huanf.exception;
+
+/**
+ * @author 35238
+ * @date 2023/8/16 0016 13:51
+ */
+import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Component
+//在这个类实现BlockExceptionHandler接口
+public class SentinelExceptionHandler implements BlockExceptionHandler {
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {
+        String msg = "请求被限流 -_-";
+        int status = 429;
+
+        if (e instanceof FlowException) {
+            msg = "请求被限流了 -_-";
+        } else if (e instanceof ParamFlowException) {
+            msg = "请求被热点参数限流 -_-";
+        } else if (e instanceof DegradeException) {
+            msg = "请求被降级了 -_-";
+        } else if (e instanceof AuthorityException) {
+            msg = "没有权限访问 -_-";
+            status = 401;
+        }
+
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(status);
+        response.getWriter().println("{\"msg\": " + msg + ", \"status\": " + status + "}");
+    }
+}

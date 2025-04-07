@@ -1,0 +1,45 @@
+server:
+  port: 8989
+
+spring:
+  jackson:
+    time-zone: GMT+8
+  datasource:
+    url: jdbc:mysql://localhost:3306/sg_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  servlet:
+    # 文件上传
+    multipart:
+      # 单个上传文件的最大允许大小
+      max-file-size: 20MB
+      # HTTP请求中包含的所有文件的总大小的最大允许值
+      max-request-size: 20MB
+
+#  cloud:
+#    sentinel:
+#      transport:
+#        dashboard: localhost:端口
+
+  redis:
+    host: localhost
+    port: 6379
+
+mybatis-plus:
+  configuration:
+    # 日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# 打开七牛云，找到密钥管理，把相关信息填写到下面3行，会被huanf-blog工程的OOSTest类获取
+myoss:
+  xxaccessKey: _ibGP9wytjLCAZPqcFaWQNxbw7fMUvofSOvOFFR3
+  xxsecretKey: QSOAU-cv3sSDGNfVNPF6iXz-PsP5X9QTrjFI9zYw
+  xxbucket: huanf-blog
